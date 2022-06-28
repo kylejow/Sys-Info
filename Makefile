@@ -1,9 +1,7 @@
-all: main Win32_Processor
+all: main
 CXXFLAGS=-Wall -g
 CXX=g++
-main: main.o
-	$(CXX) -o $@ $^
-Win32_Processor: Win32_Processor.o
+main: main.o Win32_Processor.o
 	$(CXX) -o $@ $^
 clean:
 	rm -f *.o *.exe

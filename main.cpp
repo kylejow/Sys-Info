@@ -15,8 +15,10 @@ int main(){
       if(input == "1"){
          system ("cls");
          const char* cpu_vbs = "Win32_Processor.vbs";
-         nlohmann::json cpu = Win32_Processor(cpu_vbs);
-         cout << cpu.dump(2);
+         nlohmann::ordered_json cpu = Win32_Processor(cpu_vbs);
+         for (auto it = cpu.begin(); it != cpu.end(); ++it) {
+            std::cout << it.key() << ": " << *it << endl;
+         }
          cout << "\n\n\n";
          system("pause");
       }

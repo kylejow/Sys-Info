@@ -15,6 +15,6 @@ using std::ifstream;
 using std::string;
 using json = nlohmann::json;
 
-json Win32_Processor(const char* filename);
+nlohmann::ordered_json Win32_Processor(const char* filename);
 
 #endif

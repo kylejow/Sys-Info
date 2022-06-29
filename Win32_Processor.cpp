@@ -1,8 +1,8 @@
 #include "Win32_Processor.h"
 
-json Win32_Processor(const char* filename){
+nlohmann::ordered_json Win32_Processor(const char* filename){
     system(filename);
-    json Win32_Processor;
+    nlohmann::ordered_json Win32_Processor;
     ifstream file("Win32_Processor.txt");
     std::string line;
     getline(file, line);

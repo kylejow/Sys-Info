@@ -3,11 +3,11 @@ https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/ns-sysinfoapi-syst
 https://github.com/nlohmann/json
 */
 
-#include "Win32_Processor.h"
+#include "Hardware_Classes.h"
 
 int main(){
-   const char* cpu_vbs = "Win32_Processor.vbs";
-   nlohmann::ordered_json cpu = Win32_Processor(cpu_vbs);
+   const char* infile = "Hardware_Classes.vbs";
+   nlohmann::ordered_json cpu = Hardware_Classes(infile);
    std::string input;
    while(1){
       system ("cls");

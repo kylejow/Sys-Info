@@ -14,6 +14,6 @@ using std::endl;
 using std::ifstream;
 using std::string;
 
-nlohmann::ordered_json Win32_Processor(const char* filename);
+nlohmann::ordered_json Hardware_Classes(const char* filename);
 
 #endif

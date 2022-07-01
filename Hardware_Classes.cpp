@@ -2,25 +2,25 @@
 
 nlohmann::ordered_json Hardware_Classes(const char* filename){
     system(filename);
-    nlohmann::ordered_json Hardware_Classes;
+    nlohmann::ordered_json Computer;
     ifstream file("Hardware_Classes.txt");
     std::string line;
     getline(file, line);
-    Hardware_Classes["Name"] = line;
+    Computer["Computer"]["Name"] = line;
     getline(file, line);
-    Hardware_Classes["Operating System"] = line;
+    Computer["Computer"]["Operating System"] = line;
     getline(file, line);
-    Hardware_Classes["Architecture"] = line;
+    Computer["Computer"]["Architecture"] = line;
     getline(file, line);
-    Hardware_Classes["Manufacturer"] = line;
+    Computer["Cpu"]["Manufacturer"] = line;
     getline(file, line);
-    Hardware_Classes["Processor Name"] = line;
+    Computer["Cpu"]["Processor Name"] = line;
     getline(file, line);
-    Hardware_Classes["Number of Cores"] = line;
+    Computer["Cpu"]["Number of Cores"] = line;
     getline(file, line);
-    Hardware_Classes["Base Clock Speed"] = line;
+    Computer["Cpu"]["Base Clock Speed"] = line;
     file.close();
     remove("Hardware_Classes.txt");
-    return Hardware_Classes;
+    return Computer;
     //cout << Hardware_Classes.dump(2) << endl;
 }  

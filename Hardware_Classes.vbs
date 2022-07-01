@@ -24,7 +24,7 @@ For Each obj in Processors
   objFile.Write obj.Manufacturer & vbCrLf 'Manufacturer
   objFile.Write obj.Name & vbCrLf 'Processor Name
   objFile.Write obj.NumberOfCores & vbCrLf 'NumberOfCores
-  objFile.Write obj.MaxClockSpeed & "MHz" & vbCrLf 'MaximumClockSpeed
+  objFile.Write obj.MaxClockSpeed & " MHz" & vbCrLf 'MaximumClockSpeed
 Next
 
 Set VideoController = objWMIService.ExecQuery("Select * from Win32_VideoController")

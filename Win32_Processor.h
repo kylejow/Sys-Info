@@ -1,4 +1,4 @@
-#ifndef WIN32_PROCESSOR_H // include guard
+#ifndef WIN32_PROCESSOR_H
 #define WIN32_PROCESSOR_H
 
 #include <windows.h>
@@ -13,7 +13,6 @@ using std::cin;
 using std::endl;
 using std::ifstream;
 using std::string;
-using json = nlohmann::json;
 
 nlohmann::ordered_json Win32_Processor(const char* filename);
 

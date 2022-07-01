@@ -6,6 +6,8 @@ https://github.com/nlohmann/json
 #include "Win32_Processor.h"
 
 int main(){
+   const char* cpu_vbs = "Win32_Processor.vbs";
+   nlohmann::ordered_json cpu = Win32_Processor(cpu_vbs);
    std::string input;
    while(1){
       system ("cls");
@@ -14,10 +16,8 @@ int main(){
       cin >> input;
       if(input == "1"){
          system ("cls");
-         const char* cpu_vbs = "Win32_Processor.vbs";
-         nlohmann::ordered_json cpu = Win32_Processor(cpu_vbs);
          for (auto it = cpu.begin(); it != cpu.end(); ++it) {
-            std::cout << it.key() << ": " << *it << endl;
+            std::cout << it.key() << ": " << (*it).get<std::string>() << endl;
          }
          cout << "\n\n\n";
          system("pause");

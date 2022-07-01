@@ -12,7 +12,6 @@ Set objWMIService = GetObject("winmgmts:" _
 
 Set colItems = objWMIService.ExecQuery("Select * from Win32_VideoController")
 
- 
 For Each objItem in colItems
       objFile.Write "Accelerator Capabilities: " & objItem.AcceleratorCapabilities & vbCrLf
       objFile.Write "Adapter Compatibility: " & objItem.AdapterCompatibility  & vbCrLf
@@ -74,3 +73,5 @@ For Each objItem in colItems
       objFile.Write "Video Mode Description: " & objItem.VideoModeDescription  & vbCrLf
       objFile.Write "Video Processor: " & objItem.VideoProcessor  & vbCrLf
 Next
+
+objFile.Close

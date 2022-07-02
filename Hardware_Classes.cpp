@@ -14,11 +14,13 @@ nlohmann::ordered_json Hardware_Classes(const char* filename){
     getline(file, line);
     Computer["Cpu"]["Manufacturer"] = line;
     getline(file, line);
-    Computer["Cpu"]["Processor Name"] = line;
+    Computer["Cpu"]["Name"] = line;
     getline(file, line);
     Computer["Cpu"]["Number of Cores"] = line;
     getline(file, line);
     Computer["Cpu"]["Base Clock Speed"] = line;
+    getline(file, line);
+    Computer["Gpu"]["Name"] = line;
     file.close();
     remove("Hardware_Classes.txt");
     return Computer;

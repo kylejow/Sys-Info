@@ -17,6 +17,7 @@ For Each obj in OS
   'objFile.Write "Operating System" & vbCrLf
   objFile.Write obj.Caption & vbCrLf 'operating system
   objFile.Write obj.OSArchitecture & vbCrLf 'architecture
+  objFile.Write obj.TotalVisibleMemorySize/1048576 & " GB" & vbCrLf 'ram
 Next
 
 Set Processors = objWMIService.ExecQuery("Select * from Win32_Processor")

@@ -12,6 +12,8 @@ nlohmann::ordered_json Hardware_Classes(const char* filename){
     getline(file, line);
     Computer["Computer"]["Architecture"] = line;
     getline(file, line);
+    Computer["Computer"]["Physical Memory"] = line;
+    getline(file, line);
     Computer["Cpu"]["Manufacturer"] = line;
     getline(file, line);
     Computer["Cpu"]["Name"] = line;

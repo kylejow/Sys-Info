@@ -20,7 +20,17 @@ nlohmann::ordered_json Hardware_Classes(const char* filename){
     getline(file, line);
     Computer["Cpu"]["Base Clock Speed"] = line;
     getline(file, line);
-    Computer["Gpu"]["Name"] = line;
+
+    int num_gpus = std::stoi(line);
+    for(int i = 0; i < num_gpus; i++){
+        getline(file, line);
+        Computer["Gpu"][std::to_string(i+1)] = line;
+    }
+
+    getline(file, line);
+    Computer["Motherboard"]["Manufacturer"] = line;
+    getline(file, line);
+    Computer["Motherboard"]["Name"] = line;
     file.close();
     remove("Hardware_Classes.txt");
     return Computer;

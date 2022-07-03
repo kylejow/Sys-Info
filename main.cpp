@@ -1,5 +1,4 @@
 /* references:
-https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/ns-sysinfoapi-system_info
 https://github.com/nlohmann/json
 */
 

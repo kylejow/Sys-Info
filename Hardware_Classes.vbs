@@ -28,9 +28,16 @@ For Each obj in Processors
 Next
 
 Set VideoController = objWMIService.ExecQuery("Select * from Win32_VideoController")
-For Each objItem in VideoController
-  objFile.Write objItem.Name  & vbCrLf 'gpu name
-  'objFile.Write objItem.AdapterRAM  & vbCrLf 'vram in bytes stored as uint32 - cannot display above 4gb
+objFile.Write VideoController.Count & vbCrLf 'account for multiple gpu
+For Each obj in VideoController
+  objFile.Write obj.Name & vbCrLf 'gpu name
+  'objFile.Write obj.AdapterRAM  & vbCrLf 'vram in bytes stored as uint32 - cannot display above 4gb
+Next
+
+Set BaseBoard = objWMIService.ExecQuery("Select * from Win32_BaseBoard") 
+For Each obj in BaseBoard 
+  objFile.Write obj.Manufacturer & vbCrLf 'Manufacturer
+  objFile.Write obj.Product & vbCrLf 'name
 Next
 
 objFile.Close

@@ -1,16 +1,26 @@
 /* references:
-https://github.com/nlohmann/json
+json              https://github.com/nlohmann/json
+hardware info     https://docs.microsoft.com/en-us/windows/win32/sysinfo/getting-hardware-information?redirectedfrom=MSDN
+ram usage         https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/ns-sysinfoapi-memorystatusex
+ram usage         https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-globalmemorystatusex
 */
 
 #include "Hardware_Classes.h"
 
 int main(){
+   //system information
    const char* infile = "Hardware_Classes.vbs";
    nlohmann::ordered_json Sys_Info = Hardware_Classes(infile);
+
+   //ram usage
+   MEMORYSTATUSEX memStat;
+   memStat.dwLength = sizeof (memStat);
+
    std::string input;
    while(1){
       system("cls");
       cout << "1. Print System Info" << endl;
+      cout << "2. Monitor RAM usage" << endl;
       cout << "\n\nq to exit" << endl;
       cin >> input;
       if(input == "1"){
@@ -23,8 +33,15 @@ int main(){
          }
          cout << "\n\n";
          system("pause");
-      }
-      else if(input == "q"){
+      }else if(input == "2"){
+         while(1){
+            system ("cls");
+            GlobalMemoryStatusEx(&memStat);
+            cout << memStat.ullAvailPhys/1048576 << "/" << memStat.ullTotalPhys/1048576 << " MB (" << memStat.dwMemoryLoad << "%)" << endl;
+            cout << "\n\nCtrl + C to exit" << endl;
+            Sleep(50);
+         }
+      }else if(input == "q"){
          break;
       }
    }

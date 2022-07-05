@@ -1,5 +1,5 @@
-#ifndef WIN32_PROCESSOR_H
-#define WIN32_PROCESSOR_H
+#ifndef HARDWARE_CLASSES_H
+#define HARDWARE_CLASSES_H
 
 #include <windows.h>
 #include <stdio.h>

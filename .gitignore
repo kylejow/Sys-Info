@@ -2,3 +2,5 @@
 .vscode/tasks.json
 test_classes.vbs
 .vscode/settings.json
+*.o
+*.exe

@@ -7,7 +7,8 @@ Cpu usage (Jeremy Friesner) https://stackoverflow.com/questions/23143693/retriev
 */
 
 #include "Hardware_Classes.h"
-
+void PrintRamUsage(MEMORYSTATUSEX &memStat);
+void PrintCpuUsage();
 static float CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks);
 static unsigned long long FileTimeToInt64(const FILETIME & ft);
 float GetCPULoad();
@@ -44,24 +45,25 @@ int main(){
          while(1){
             system ("cls");
             GlobalMemoryStatusEx(&memStat);
-            cout << "RAM: " << memStat.ullAvailPhys/1048576 << "/" << memStat.ullTotalPhys/1048576 << " MB (" << memStat.dwMemoryLoad << "%)"
-                 << "\n\n\nCtrl + C to exit" << endl;
+            PrintRamUsage(memStat);
+            cout << "\n\n\nCtrl + C to exit" << endl;
             Sleep(50);
          }
       }else if(input == "3"){
          while(1){
             system ("cls");
-            cout << "Cpu: " << GetCPULoad()*100 << "%"
-                 << "\n\n\nCtrl + C to exit" << endl;
+            PrintCpuUsage();
+            cout << "\n\n\nCtrl + C to exit" << endl;
             Sleep(50);
          }
       }else if(input == "4"){
          while(1){
             system ("cls");
             GlobalMemoryStatusEx(&memStat);
-            cout << "RAM: " << memStat.ullAvailPhys/1048576 << "/" << memStat.ullTotalPhys/1048576 << " MB (" << memStat.dwMemoryLoad << "%)\n"
-                 << "Cpu: " << GetCPULoad()*100 << "%"
-                 << "\n\n\nCtrl + C to exit" << endl;
+            PrintRamUsage(memStat);
+            cout << "\n";
+            PrintCpuUsage();
+            cout << "\n\n\nCtrl + C to exit" << endl;
             Sleep(50);
          }
       }else if(input == "q")
@@ -69,6 +71,16 @@ int main(){
    }
    system ("cls");
    return 0;
+}
+
+void PrintRamUsage(MEMORYSTATUSEX &memStat){
+   DWORDLONG total_ram = memStat.ullTotalPhys/1048576;
+   DWORDLONG used_ram = total_ram - memStat.ullAvailPhys/1048576;
+   cout << "RAM: " << used_ram  << "/" << total_ram << " MB (" << memStat.dwMemoryLoad << "%)";
+}
+
+void PrintCpuUsage(){
+   cout << "Cpu: " << GetCPULoad()*50 << "%";
 }
 
 static float CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks){

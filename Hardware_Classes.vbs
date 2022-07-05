@@ -2,6 +2,7 @@
 ' https://stackoverflow.com/questions/2198810/creating-and-writing-lines-to-a-file
 ' https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-processor
 ' https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-videocontroller
+' https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-baseboard
 
 Set objFSO=CreateObject("Scripting.FileSystemObject")
 outFile="Hardware_Classes.txt"

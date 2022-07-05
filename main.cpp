@@ -19,16 +19,16 @@ int main(){
    std::string input;
    while(1){
       system("cls");
-      cout << "1. Print System Info" << endl;
-      cout << "2. Monitor RAM usage" << endl;
-      cout << "\n\nq to exit" << endl;
+      cout << "1. Print System Info\n"
+           << "2. Monitor RAM usage\n"
+           << "\n\nq to exit" << endl;
       cin >> input;
       if(input == "1"){
          system ("cls");
          for(auto iter1 = Sys_Info.begin(); iter1 != Sys_Info.end(); ++iter1){
-            cout << iter1.key() << ": " << endl;
+            cout << iter1.key() << ": \n";
             for(auto iter2 = Sys_Info[iter1.key()].begin(); iter2 != Sys_Info[iter1.key()].end(); ++iter2){
-               cout << "    " << iter2.key() << ": "<< (*iter2).get<std::string>() << endl;
+               cout << "    " << iter2.key() << ": "<< (*iter2).get<std::string>() << "\n";
             }
          }
          cout << "\n\n";
@@ -37,8 +37,8 @@ int main(){
          while(1){
             system ("cls");
             GlobalMemoryStatusEx(&memStat);
-            cout << memStat.ullAvailPhys/1048576 << "/" << memStat.ullTotalPhys/1048576 << " MB (" << memStat.dwMemoryLoad << "%)" << endl;
-            cout << "\n\nCtrl + C to exit" << endl;
+            cout << memStat.ullAvailPhys/1048576 << "/" << memStat.ullTotalPhys/1048576 << " MB (" << memStat.dwMemoryLoad << "%)"
+                 << "\n\n\nCtrl + C to exit" << endl;
             Sleep(50);
          }
       }else if(input == "q"){

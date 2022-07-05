@@ -7,8 +7,10 @@ Cpu usage (Jeremy Friesner) https://stackoverflow.com/questions/23143693/retriev
 */
 
 #include "Hardware_Classes.h"
+
+int GetPolling(void);
 void PrintRamUsage(MEMORYSTATUSEX &memStat);
-void PrintCpuUsage();
+void PrintCpuUsage(void);
 static float CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks);
 static unsigned long long FileTimeToInt64(const FILETIME & ft);
 float GetCPULoad();
@@ -42,21 +44,24 @@ int main(){
          cout << "\n\n";
          system("pause");
       }else if(input == "2"){
+         int polling = GetPolling();
          while(1){
             system ("cls");
             GlobalMemoryStatusEx(&memStat);
             PrintRamUsage(memStat);
             cout << "\n\n\nCtrl + C to exit" << endl;
-            Sleep(50);
+            Sleep(polling);
          }
       }else if(input == "3"){
+         int polling = GetPolling();
          while(1){
             system ("cls");
             PrintCpuUsage();
             cout << "\n\n\nCtrl + C to exit" << endl;
-            Sleep(50);
+            Sleep(polling);
          }
       }else if(input == "4"){
+         int polling = GetPolling();
          while(1){
             system ("cls");
             GlobalMemoryStatusEx(&memStat);
@@ -64,13 +69,21 @@ int main(){
             cout << "\n";
             PrintCpuUsage();
             cout << "\n\n\nCtrl + C to exit" << endl;
-            Sleep(50);
+            Sleep(polling);
          }
       }else if(input == "q")
          break;
    }
    system ("cls");
    return 0;
+}
+
+int GetPolling(void){
+   system ("cls");
+   int polling;
+   cout << "Enter polling rate in milliseconds: ";
+   cin >> polling;
+   return polling;
 }
 
 void PrintRamUsage(MEMORYSTATUSEX &memStat){

@@ -5,6 +5,8 @@ ram usage         https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/
 ram usage         https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-globalmemorystatusex
 Cpu usage (Jeremy Friesner) https://stackoverflow.com/questions/23143693/retrieving-cpu-load-percent-total-in-windows-with-c
 */
+#include <thread>
+#include <atomic>
 
 #include "Hardware_Classes.h"
 
@@ -14,6 +16,7 @@ void PrintCpuUsage(void);
 static float CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks);
 static unsigned long long FileTimeToInt64(const FILETIME & ft);
 float GetCPULoad();
+void stopProgram(std::atomic_bool& stop);
 
 int main(){
    //system information
@@ -24,8 +27,11 @@ int main(){
    MEMORYSTATUSEX memStat;
    memStat.dwLength = sizeof (memStat);
 
+   std::atomic_bool stop;
+
    std::string input;
    while(1){
+      stop = false;
       system("cls");
       cout << "1. Print System Info\n"
            << "2. Monitor RAM usage\n"
@@ -45,32 +51,38 @@ int main(){
          system("pause");
       }else if(input == "2"){
          int polling = GetPolling();
-         while(1){
+         std::thread stopThread(stopProgram, std::ref(stop));
+         while(!stop){
             system ("cls");
             GlobalMemoryStatusEx(&memStat);
             PrintRamUsage(memStat);
-            cout << "\n\n\nCtrl + C to exit" << endl;
+            cout << "\n\n\nPress enter to exit" << endl;
             Sleep(polling);
          }
+         stopThread.join();
       }else if(input == "3"){
          int polling = GetPolling();
-         while(1){
+         std::thread stopThread(stopProgram, std::ref(stop));
+         while(!stop){
             system ("cls");
             PrintCpuUsage();
-            cout << "\n\n\nCtrl + C to exit" << endl;
+            cout << "\n\n\nPress enter to exit" << endl;
             Sleep(polling);
          }
+         stopThread.join();
       }else if(input == "4"){
          int polling = GetPolling();
-         while(1){
+         std::thread stopThread(stopProgram, std::ref(stop));
+         while(!stop){
             system ("cls");
             GlobalMemoryStatusEx(&memStat);
             PrintRamUsage(memStat);
             cout << "\n";
             PrintCpuUsage();
-            cout << "\n\n\nCtrl + C to exit" << endl;
+            cout << "\n\n\nPress enter to exit" << endl;
             Sleep(polling);
          }
+         stopThread.join();
       }else if(input == "q")
          break;
    }
@@ -120,4 +132,11 @@ static unsigned long long FileTimeToInt64(const FILETIME & ft){
 float GetCPULoad(){
    FILETIME idleTime, kernelTime, userTime;
    return GetSystemTimes(&idleTime, &kernelTime, &userTime) ? CalculateCPULoad(FileTimeToInt64(idleTime), FileTimeToInt64(kernelTime)+FileTimeToInt64(userTime)) : -1.0f;
+}
+
+void stopProgram(std::atomic_bool& stop){
+   cin.ignore(256,'\n');
+   std::cin.get();
+   stop = true;
+   return;
 }

@@ -17,6 +17,7 @@ static float CalculateCPULoad(unsigned long long idleTicks, unsigned long long t
 static unsigned long long FileTimeToInt64(const FILETIME & ft);
 float GetCPULoad();
 void stopProgram(std::atomic_bool& stop);
+void clearScreen();
 
 int main(){
    //system information
@@ -53,7 +54,7 @@ int main(){
          int polling = GetPolling();
          std::thread stopThread(stopProgram, std::ref(stop));
          while(!stop){
-            system ("cls");
+            clearScreen();
             GlobalMemoryStatusEx(&memStat);
             PrintRamUsage(memStat);
             cout << "\n\n\nPress enter to exit" << endl;
@@ -64,7 +65,7 @@ int main(){
          int polling = GetPolling();
          std::thread stopThread(stopProgram, std::ref(stop));
          while(!stop){
-            system ("cls");
+            clearScreen();
             PrintCpuUsage();
             cout << "\n\n\nPress enter to exit" << endl;
             Sleep(polling);
@@ -74,7 +75,7 @@ int main(){
          int polling = GetPolling();
          std::thread stopThread(stopProgram, std::ref(stop));
          while(!stop){
-            system ("cls");
+            clearScreen();
             GlobalMemoryStatusEx(&memStat);
             PrintRamUsage(memStat);
             cout << "\n";
@@ -95,17 +96,18 @@ int GetPolling(void){
    int polling;
    cout << "Enter polling rate in milliseconds: ";
    cin >> polling;
+   system ("cls");
    return polling;
 }
 
 void PrintRamUsage(MEMORYSTATUSEX &memStat){
    DWORDLONG total_ram = memStat.ullTotalPhys/1048576;
    DWORDLONG used_ram = total_ram - memStat.ullAvailPhys/1048576;
-   cout << "RAM: " << used_ram  << "/" << total_ram << " MB (" << memStat.dwMemoryLoad << "%)";
+   cout << "RAM: " << used_ram  << "/" << total_ram << " MB (" << memStat.dwMemoryLoad << "%)" << "         ";
 }
 
 void PrintCpuUsage(){
-   cout << "Cpu: " << GetCPULoad()*50 << "%";
+   cout << "Cpu: " << GetCPULoad()*50 << "%" << "         ";
 }
 
 static float CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks){
@@ -139,4 +141,13 @@ void stopProgram(std::atomic_bool& stop){
    std::cin.get();
    stop = true;
    return;
+}
+
+void clearScreen(){
+    HANDLE hOut;
+    COORD Position;
+    hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    Position.X = 0;
+    Position.Y = 0;
+    SetConsoleCursorPosition(hOut, Position);
 }

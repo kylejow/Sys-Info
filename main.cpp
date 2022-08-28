@@ -92,11 +92,18 @@ int main(){
 }
 
 int GetPolling(void){
-   system ("cls");
+   system("cls");
    int polling;
    cout << "Enter polling rate in milliseconds: ";
    cin >> polling;
-   system ("cls");
+   while(cin.fail()){
+      system("cls");
+      cout << "Enter polling rate in milliseconds: ";
+      cin.clear();
+      cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+      cin >> polling;
+   }
+   system("cls");
    return polling;
 }
 
